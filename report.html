@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>先生方の声のレポート｜柏木小 校内研修</title>
+<style>
+  :root {
+    --bg: #f7f7f5;
+    --panel: #ffffff;
+    --ink: #22242a;
+    --muted: #6b6f76;
+    --line: #e4e4e0;
+    --accent: #2f5f8f;
+    --accent-soft: #e7edf4;
+    --code-bg: #1e2127;
+    --code-ink: #e6e6e6;
+    --note-bg: #fff8e6;
+    --note-line: #e8d48a;
+    --note-ink: #6b5310;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #16181d;
+      --panel: #1e2127;
+      --ink: #e7e8ea;
+      --muted: #9aa0a8;
+      --line: #313640;
+      --accent: #6b9fd4;
+      --accent-soft: #222a34;
+      --code-bg: #12141a;
+      --code-ink: #e6e6e6;
+      --note-bg: #2a2617;
+      --note-line: #5c5024;
+      --note-ink: #e0cf90;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Noto Sans JP", "Yu Gothic", sans-serif;
+    line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 820px; margin: 0 auto; padding: 40px 20px 80px; }
+  header.page {
+    border-bottom: 2px solid var(--accent);
+    padding-bottom: 20px;
+    margin-bottom: 8px;
+  }
+  header.page h1 { font-size: 1.6rem; margin: 0 0 6px; letter-spacing: .01em; }
+  header.page .sub { color: var(--muted); font-size: .95rem; margin: 0; }
+  .lead {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 18px 20px;
+    margin: 24px 0 32px;
+    font-size: .95rem;
+  }
+  .lead h2 { font-size: 1rem; margin: 0 0 8px; }
+  section.step { margin-bottom: 40px; }
+  section.step > h2 {
+    font-size: 1.25rem;
+    border-left: 5px solid var(--accent);
+    padding-left: 12px;
+    margin: 0 0 10px;
+  }
+  .what { color: var(--muted); font-size: .93rem; margin: 0 0 12px; }
+  .note {
+    background: var(--note-bg);
+    border: 1px solid var(--note-line);
+    color: var(--note-ink);
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: .86rem;
+    margin: 12px 0;
+  }
+  .note code { background: rgba(0,0,0,.12); padding: 1px 5px; border-radius: 4px; }
+  .codewrap { position: relative; border-radius: 10px; overflow: hidden; border: 1px solid var(--line); margin: 14px 0; }
+  .codebar {
+    display: flex; justify-content: space-between; align-items: center;
+    background: var(--code-bg);
+    padding: 8px 12px;
+    border-bottom: 1px solid rgba(255,255,255,.08);
+  }
+  .codebar .fname { color: #9aa7b8; font-size: .78rem; font-family: "SF Mono", Menlo, Consolas, monospace; }
+  .copy-btn {
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 5px 14px;
+    font-size: .8rem;
+    cursor: pointer;
+    transition: background .15s, transform .1s;
+    white-space: nowrap;
+  }
+  .copy-btn:hover { filter: brightness(1.08); }
+  .copy-btn:active { transform: scale(.96); }
+  .copy-btn.done { background: #3a6a8a; }
+  pre {
+    margin: 0;
+    background: var(--code-bg);
+    color: var(--code-ink);
+    padding: 16px;
+    overflow-x: auto;
+    font-size: .82rem;
+    line-height: 1.6;
+    max-height: 560px;
+  }
+  pre code { font-family: "SF Mono", Menlo, Consolas, "Courier New", monospace; white-space: pre-wrap; word-break: break-all; }
+  .codewrap.order pre { background: #263043; max-height: none; }
+  .codewrap.order .codebar { background: #263043; }
+  .vidcards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+    margin: 16px 0;
+  }
+  .vidcard {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    overflow: hidden;
+    transition: border-color .15s, transform .1s;
+  }
+  .vidcard:hover { border-color: var(--accent); transform: translateY(-2px); }
+  .vidcard .thumb {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background: #000;
+    overflow: hidden;
+  }
+  .vidcard .thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .vidcard .thumb::after {
+    content: "";
+    position: absolute;
+    left: 50%; top: 50%;
+    width: 54px; height: 38px;
+    margin: -19px 0 0 -27px;
+    background: rgba(0,0,0,.65);
+    border-radius: 9px;
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,.2);
+  }
+  .vidcard .thumb::before {
+    content: "";
+    position: absolute;
+    left: 50%; top: 50%;
+    margin: -8px 0 0 -5px;
+    border-style: solid;
+    border-width: 8px 0 8px 14px;
+    border-color: transparent transparent transparent #fff;
+    z-index: 1;
+  }
+  .vidcard .meta { padding: 12px 14px 14px; }
+  .vidcard .vtitle { font-size: .92rem; font-weight: 600; line-height: 1.5; margin: 0 0 4px; }
+  .vidcard .vsub { font-size: .82rem; color: var(--muted); margin: 0; }
+  .video {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    background: #000;
+    margin: 14px 0;
+  }
+  .video iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+  .btnlink {
+    display: inline-block;
+    background: var(--accent);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-size: .95rem;
+    margin: 6px 0;
+  }
+  .btnlink:hover { filter: brightness(1.08); }
+  .btnlink.ghost {
+    background: transparent;
+    color: var(--accent);
+    border: 1px solid var(--accent);
+  }
+  ol.steps { padding-left: 1.3em; }
+  ol.steps li { margin: 10px 0; }
+  ul.checks { padding-left: 1.3em; }
+  ul.checks li { margin: 10px 0; }
+  .cta {
+    background: var(--accent-soft);
+    border-radius: 12px;
+    padding: 18px 20px;
+    margin-top: 40px;
+    font-size: .95rem;
+  }
+  .cta strong { color: var(--accent); }
+  footer.page {
+    margin-top: 60px;
+    padding-top: 24px;
+    border-top: 1px solid var(--line);
+    color: var(--muted);
+    font-size: .86rem;
+  }
+  @media (max-width: 600px) {
+    .wrap { padding: 24px 14px 60px; }
+    header.page h1 { font-size: 1.3rem; }
+    pre { font-size: .76rem; }
+  }
+</style></head>
+<body>
+<div class="wrap">
+
+<header class="page">
+  <h1>先生方の声のレポート</h1>
+  <p class="sub">新宿区立柏木小学校 校内研修（2026年10月1日）／前多昌顕　<a href="./">← おみやげページに戻る</a></p>
+</header>
+
+<div class="lead">
+  <h2>このレポートについて</h2>
+  研修の最後に、グループごとに録っていただいた振り返り（録音4件と手書き1件）を、すべて文字に起こして読みました。お名前・グループ名は出していません。「　」の中は、録音から起こした言葉です（話し言葉を、意味を変えずに読みやすく整えています）。
+</div>
+
+<section class="step">
+  <h2>まとめると、3つ</h2>
+  <ol>
+    <li style="margin:8px 0"><strong>「AIの答えで終わらせない」が届いていました。</strong>「AIに答えを聞くんじゃなくて、その過程を利用して、最後は自分の意見が出せるように使う」「『すごい』で終わっちゃいけない」。</li>
+    <li style="margin:8px 0"><strong>国語でAIを使うのはどうかと思っていた先生が、「使いようだ」と話していました。</strong>しかも、推敲やファクトチェックなど、ご自分の授業の場面に置き換えるところまで。</li>
+    <li style="margin:8px 0"><strong>いちばん大事な問いをいただきました。</strong>「足場を掛けるにも、基礎能力が要る。それをどう見取るのか」。</li>
+  </ol>
+</section>
+
+<section class="step">
+  <h2>届いていたこと</h2>
+  <ul class="checks">
+    <li>「AIに答えを聞くんじゃなくて、その過程を利用して、でも最後は自分の意見が出せるように、AIを使うって、すごく分かってよかった」</li>
+    <li>「『すごい』で終わっちゃいけないんだなと、改めて思った」</li>
+    <li>「教師側がどんなことに使おうかなっていう発想を豊かに持っていないと、いい道具にならない。自分の中の引き出しを、もっと増やさなくちゃ」</li>
+    <li>「使うことが目的になるんじゃなくて、あくまで子どもたちの思考のツールとして、使う側がどう使わせるかがポイント」</li>
+    <li>「実際にやってみることで、AIがちょっと身近なものになった」</li>
+    <li>「AIは今までの経験を覆すようなもので、虚しさを感じてはいたけれど、そうじゃない。新たな可能性を広げる機会なんだ」</li>
+  </ul>
+</section>
+
+<section class="step">
+  <h2>ご自分の授業に置き換えてくださった例</h2>
+  <p class="what">いちばんうれしかったのが、ここです。研修の内容が、その場で先生方の授業に翻訳されていました。</p>
+  <ul class="checks">
+    <li><strong>国語・作文の推敲とファクトチェック</strong>：ダウト探しの経験を、学校の中で積ませる。「ここで失敗させて、外で失敗させない」</li>
+    <li><strong>国語・すでにやっていた実践の裏づけ</strong>：Canva AIを使った単元で、子どもに「ひらがなで教えてもらう」「AIと喧嘩をしなさい」と伝えていた。「学習の目標に一回到達してから使ったから、役に立った」と、<strong>使う順番</strong>に気づいた先生も</li>
+    <li><strong>算数・拡大と縮小</strong>：学校の地図を実測して縮図をつくり、見比べて直す。そこに「目当てが縮小なら、地図を描く時間がもったいない」と返した先生がいて、<strong>AIの話から、授業の目当ての話に戻ってきました</strong></li>
+    <li><strong>読解</strong>：時間の限られた単元で、読みの確認はAIで手早く済ませ、深めたいところに時間を取る</li>
+    <li><strong>考えを図や絵で伝える場面</strong>：3年生のプロンプトの型に入れ込めば、どの教科でもイメージを見せられる</li>
+    <li><strong>振り返りの集め方</strong>：音声や付箋で集めておけば、単元をまたいで意見の移り変わりが見える</li>
+  </ul>
+</section>
+
+<section class="step">
+  <h2>いただいた心配・壁</h2>
+  <ul class="checks">
+    <li><strong>覚えきれない</strong>：「資料が欲しい」→ <a href="./">おみやげページ</a>にまとめてあります。指示文はコピーしてそのまま使えます</li>
+    <li><strong>作品づくりに時間がかかる</strong>：「技術を得るまで、子どもも自分も時間がかかる」</li>
+    <li><strong>どの場面で使うかが、まだ描けない</strong>：「どの場面で活用できるかを考えていかないと、なかなか使っていけない」「今日のことを忘れちゃったら、またできない」</li>
+    <li><strong>プロンプトの力</strong>：「プロンプトが命」（2つのグループから別々に）。「書いた通りにしかやってくれないから、教員の質の確保も、子どもの力も必要」</li>
+  </ul>
+</section>
+
+<section class="step">
+  <h2>いただいた問い</h2>
+  <div class="note" style="font-size:1rem">
+    <strong>「足場を掛けるにも、基礎能力が必要。そこってどう測るのか」</strong><br>
+    「分かる子もいれば、分からない子もいる。語れるレベルまで、我々はどうやって何をするんだろう」
+  </div>
+  <p class="what">今日の話は「足場があるか、ないか」で止まっていて、<strong>子どもによって足場の高さをどう決めるか</strong>には答えられていませんでした。</p>
+  <p class="what">「AIは補助輪でしかない、じゃなくて、飛行機であり車にしなきゃいけない」という声もありました。補助輪は「いつか外すもの」としてお話ししましたが、AIで行ける距離そのものを変える、という見方です。</p>
+  <p class="what" style="margin-bottom:0"><strong>2月26日に伺うときに、この続きを一緒に考えさせてください。</strong></p>
+</section>
+
+<div class="cta">
+  <p style="margin:0">振り返りを録っていただき、ありがとうございました。<strong>「こんなに一生懸命お話を聞いた研修が初めてです」</strong>という一言もいただきました。2月にまたお会いできるのを楽しみにしています。</p>
+</div>
+
+<footer class="page">
+  新宿区立柏木小学校 校内研修（2026年10月1日）／前多昌顕<br>
+  <a href="./">おみやげページ（bit.ly/kashiwagi1001）</a>
+</footer>
+
+</div>
+</body>
+</html>
