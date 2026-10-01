@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AIは学びの何を変えるか｜柏木小 おみやげページ</title>
+<style>
+  :root {
+    --bg: #f7f7f5;
+    --panel: #ffffff;
+    --ink: #22242a;
+    --muted: #6b6f76;
+    --line: #e4e4e0;
+    --accent: #2f5f8f;
+    --accent-soft: #e7edf4;
+    --code-bg: #1e2127;
+    --code-ink: #e6e6e6;
+    --note-bg: #fff8e6;
+    --note-line: #e8d48a;
+    --note-ink: #6b5310;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #16181d;
+      --panel: #1e2127;
+      --ink: #e7e8ea;
+      --muted: #9aa0a8;
+      --line: #313640;
+      --accent: #6b9fd4;
+      --accent-soft: #222a34;
+      --code-bg: #12141a;
+      --code-ink: #e6e6e6;
+      --note-bg: #2a2617;
+      --note-line: #5c5024;
+      --note-ink: #e0cf90;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Noto Sans JP", "Yu Gothic", sans-serif;
+    line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 820px; margin: 0 auto; padding: 40px 20px 80px; }
+  header.page {
+    border-bottom: 2px solid var(--accent);
+    padding-bottom: 20px;
+    margin-bottom: 8px;
+  }
+  header.page h1 { font-size: 1.6rem; margin: 0 0 6px; letter-spacing: .01em; }
+  header.page .sub { color: var(--muted); font-size: .95rem; margin: 0; }
+  .lead {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 18px 20px;
+    margin: 24px 0 32px;
+    font-size: .95rem;
+  }
+  .lead h2 { font-size: 1rem; margin: 0 0 8px; }
+  section.step { margin-bottom: 40px; }
+  section.step > h2 {
+    font-size: 1.25rem;
+    border-left: 5px solid var(--accent);
+    padding-left: 12px;
+    margin: 0 0 10px;
+  }
+  .what { color: var(--muted); font-size: .93rem; margin: 0 0 12px; }
+  .note {
+    background: var(--note-bg);
+    border: 1px solid var(--note-line);
+    color: var(--note-ink);
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: .86rem;
+    margin: 12px 0;
+  }
+  .note code { background: rgba(0,0,0,.12); padding: 1px 5px; border-radius: 4px; }
+  .codewrap { position: relative; border-radius: 10px; overflow: hidden; border: 1px solid var(--line); margin: 14px 0; }
+  .codebar {
+    display: flex; justify-content: space-between; align-items: center;
+    background: var(--code-bg);
+    padding: 8px 12px;
+    border-bottom: 1px solid rgba(255,255,255,.08);
+  }
+  .codebar .fname { color: #9aa7b8; font-size: .78rem; font-family: "SF Mono", Menlo, Consolas, monospace; }
+  .copy-btn {
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 5px 14px;
+    font-size: .8rem;
+    cursor: pointer;
+    transition: background .15s, transform .1s;
+    white-space: nowrap;
+  }
+  .copy-btn:hover { filter: brightness(1.08); }
+  .copy-btn:active { transform: scale(.96); }
+  .copy-btn.done { background: #3a6a8a; }
+  pre {
+    margin: 0;
+    background: var(--code-bg);
+    color: var(--code-ink);
+    padding: 16px;
+    overflow-x: auto;
+    font-size: .82rem;
+    line-height: 1.6;
+    max-height: 560px;
+  }
+  pre code { font-family: "SF Mono", Menlo, Consolas, "Courier New", monospace; white-space: pre-wrap; word-break: break-all; }
+  .codewrap.order pre { background: #263043; max-height: none; }
+  .codewrap.order .codebar { background: #263043; }
+  .vidcards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+    margin: 16px 0;
+  }
+  .vidcard {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    overflow: hidden;
+    transition: border-color .15s, transform .1s;
+  }
+  .vidcard:hover { border-color: var(--accent); transform: translateY(-2px); }
+  .vidcard .thumb {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background: #000;
+    overflow: hidden;
+  }
+  .vidcard .thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .vidcard .thumb::after {
+    content: "";
+    position: absolute;
+    left: 50%; top: 50%;
+    width: 54px; height: 38px;
+    margin: -19px 0 0 -27px;
+    background: rgba(0,0,0,.65);
+    border-radius: 9px;
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,.2);
+  }
+  .vidcard .thumb::before {
+    content: "";
+    position: absolute;
+    left: 50%; top: 50%;
+    margin: -8px 0 0 -5px;
+    border-style: solid;
+    border-width: 8px 0 8px 14px;
+    border-color: transparent transparent transparent #fff;
+    z-index: 1;
+  }
+  .vidcard .meta { padding: 12px 14px 14px; }
+  .vidcard .vtitle { font-size: .92rem; font-weight: 600; line-height: 1.5; margin: 0 0 4px; }
+  .vidcard .vsub { font-size: .82rem; color: var(--muted); margin: 0; }
+  .video {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    background: #000;
+    margin: 14px 0;
+  }
+  .video iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+  .btnlink {
+    display: inline-block;
+    background: var(--accent);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-size: .95rem;
+    margin: 6px 0;
+  }
+  .btnlink:hover { filter: brightness(1.08); }
+  .btnlink.ghost {
+    background: transparent;
+    color: var(--accent);
+    border: 1px solid var(--accent);
+  }
+  ol.steps { padding-left: 1.3em; }
+  ol.steps li { margin: 10px 0; }
+  ul.checks { padding-left: 1.3em; }
+  ul.checks li { margin: 10px 0; }
+  .cta {
+    background: var(--accent-soft);
+    border-radius: 12px;
+    padding: 18px 20px;
+    margin-top: 40px;
+    font-size: .95rem;
+  }
+  .cta strong { color: var(--accent); }
+  footer.page {
+    margin-top: 60px;
+    padding-top: 24px;
+    border-top: 1px solid var(--line);
+    color: var(--muted);
+    font-size: .86rem;
+  }
+  @media (max-width: 600px) {
+    .wrap { padding: 24px 14px 60px; }
+    header.page h1 { font-size: 1.3rem; }
+    pre { font-size: .76rem; }
+  }
+</style></head>
+<body>
+<div class="wrap">
+
+<header class="page">
+  <h1>AIは、学びの何を変えて、何を変えないのか｜おみやげページ</h1>
+  <p class="sub">新宿区立柏木小学校 校内研修（2026年10月1日）参加者用ページ／前多昌顕</p>
+</header>
+
+<div class="lead">
+  <h2>このページがあるので、メモは取らなくて大丈夫です</h2>
+  今日の講演の要点と、午前の3つの授業の手順・指示文をまとめました。指示文はコピーボタンでそのまま使えます。授業で使っていただいて構いません。
+</div>
+
+<section class="step">
+  <h2>まず、今日の2行</h2>
+  <div class="note" style="font-size:1.05rem">
+    <strong>AIは「作る」を変えます。「選ぶ・確かめる・感じる」は変えません。</strong><br>
+    だから、AIを使ったあとの子どもには<strong>「選んだ理由」</strong>が残っていてほしいと考えています。
+  </div>
+  <p class="what" style="margin-bottom:0">「AIを使うと、子どもが考えなくなる」は、半分は当たっています。分かれ目は、道具ではなく授業の設計にあります。</p>
+</section>
+
+<section class="step">
+  <h2>境界線に、名前をつける</h2>
+  <ul class="checks">
+    <li><strong>認知オフローディング</strong>：作業を外に置いて、頭のリソースを空けること。メモ・電卓・辞書・検索と同じ「渡す」行為です。それ自体は良くも悪くもありません。</li>
+    <li><strong>認知アウトソーシング</strong>：「渡す」が行き過ぎて、判断や思考そのものまで手放してしまうこと。批判されているのは、こちらです。</li>
+    <li><strong>スキャフォールディング（足場）</strong>：渡した先に「考える場面」を用意しておく設計。補助輪は、いつか外します。</li>
+  </ul>
+  <div class="note">足場があればオフローディング。足場がなければアウトソーシング。</div>
+  <p class="what">同じAIでも、答えを言うAIで練習した高校生は、AIを取り上げた本番で成績が下がりました。ヒントだけを返すAIで練習した高校生は、下がりませんでした。違いは「答えを言うか、言わないか」だけです（Bastaniほか、2024）。</p>
+  <p class="what" style="margin-bottom:0"><strong>AIを使うから、考えなくなったのではありません。もともと考えていなかったことが、見えやすくなっただけです。</strong></p>
+</section>
+
+<section class="step">
+  <h2>足場は、この3つ</h2>
+  <ul class="checks">
+    <li><strong>ものさし</strong>：何を良しとするかを決めるのは人です。AIは、そのものさしに照らして助言するだけ。</li>
+    <li><strong>本物の体験</strong>：顕微鏡をのぞいた「うわっ、動いてる！」に、AIは勝てません。体験はリアル、作業はデジタル。</li>
+    <li><strong>「なぜそれにしたの？」を一言挟む</strong>：AIに答えを出させたら、そのまま丸をつけない。理由を聞く一手間です。</li>
+  </ul>
+</section>
+
+<section class="step">
+  <h2>午前の授業①　3年 図画工作「ねんどのなかまに、色とばしょをあげよう」</h2>
+  <p class="what">マジック生成で粘土の作品をつくる → 見せ合う → 背景除去 → ペンで色をぬる（透明度を下げて、粘土のでこぼこを残す）→ 素材から背景を選ぶ → 時間があれば、お話を録音。</p>
+  <div class="codewrap">
+    <div class="codebar"><span class="fname">マジック生成に貼る（子ども用）</span><button class="copy-btn">コピー</button></div>
+    <pre><code>油ねんどで作った、かんたんな さかな の写真。色は ねんど色の 1色だけ。手でこねた あとが のこっている。カラフルに しない。白い つくえの 上に おいてある。</code></pre>
+  </div>
+  <div class="note">変えるのは「さかな」の1語だけ。「カラフルにしない」「1色だけ」は変えません。アニメやゲームのキャラクターの名前は入れないよう、先に伝えます。</div>
+</section>
+
+<section class="step">
+  <h2>午前の授業②　5年 国語「秋を十七音で」</h2>
+  <p class="what">ものさしを配る → 最初の一句は自分で（AIに触らない）→ AIに助言をもらう（読むだけ）→ AIが作った3句をものさしで評価して話し合う → 評価した目で自分の句を見直す → 直した・直さなかった理由を録画で説明。</p>
+  <div class="note" style="background:var(--accent-soft);border-color:var(--accent);color:var(--ink)">
+    <strong>ものさし（A よくできている／B できている／C もう少し）</strong><br>
+    1　音数とリズム（五・七・五。字余り・字足らずは、あえてならOK）<br>
+    2　季語（季節が伝わる言葉がひとつ。季重なりはおおらかに）<br>
+    3　表現の工夫（比喩・反復・言葉の順序・漢字と仮名の使い分け）
+  </div>
+  <div class="codewrap">
+    <div class="codebar"><span class="fname">自分の俳句への助言（子ども用）</span><button class="copy-btn">コピー</button></div>
+    <pre><code>小学生が作った俳句です。次のルーブリックに照らして、良いところを一つ、もっと良くなる提案を二つ、小学生に分かる言葉で書いてください。直した句は示さないでください。
+この教材では、字余りや字足らずも許し、季重なりもおおらかに扱います。決まりを機械的に指摘しないでください。
+ルーブリック
+1　音数とリズム
+2　季語
+3　表現の工夫（比喩・反復・言葉の順序・漢字と仮名の使い分け）
+俳句：</code></pre>
+  </div>
+  <div class="codewrap order">
+    <div class="codebar"><span class="fname">AIに3句作らせる（先生用）</span><button class="copy-btn">コピー</button></div>
+    <pre><code>秋の俳句を3句作ってください。小学5年生が作ったような言葉で書いてください。
+次のルーブリックの3つの観点を、それぞれA（よくできている）・B（できている）・C（もう少し）で評価したとき、次のようになる句を1つずつ作ってください。
+・3つの観点すべてがAになる句（AAA）
+・3つの観点すべてがBになる句（BBB）
+・3つの観点すべてがCになる句（CCC）
+3句の順番はばらばらにしてください。どの句がどの評価かは書かないでください。番号をつけて、句だけを並べてください。
+ルーブリック
+1　音数とリズム（五・七・五。字余り・字足らずは、あえてならOK）
+2　季語（季節が伝わる言葉がひとつ。季重なりはおおらかに）
+3　表現の工夫（比喩・反復・言葉の順序・漢字と仮名の使い分け）</code></pre>
+  </div>
+  <div class="note">「直した句は示さないでください」が足場です。完成形を見せられたら、子どもは写して終わります。直さないと決めるのも、立派な推敲です。</div>
+</section>
+
+<section class="step">
+  <h2>午前の授業③　4年 総合「柏木小のよいところを、青森の小学生に伝えよう」</h2>
+  <p class="what">共有ホワイトボードで、自分の番号の付箋を選ぶ → <strong>書く前にまず付箋の色を変える</strong>（「使用中」の合図＝取り合い防止）→ よいところを付箋1枚に1つ → CanvaのAIで付箋を分類 → 「このまとまりでいいか」を話し合う → テーマを1つ選んでスライド1枚 → 近くの人に発表。</p>
+  <div class="note">AIの分け方を正解にしません。「このまとまりの名前は合っている？」「この付箋はこっちじゃない？」と問い返します。学年一斉など人数が多いときは、ホワイトボードをクラスごとに分けると動きが軽くなります。</div>
+</section>
+
+<section class="step">
+  <h2>スライドと出典</h2>
+  <p style="margin:0 0 6px"><a class="btnlink" href="assets/kashiwagi20261001_slides.pdf" target="_blank" rel="noopener">スライドを見る（PDF・23枚）</a></p>
+  <p class="what">子どもの作品を写したページは、ここには載せていません。</p>
+  <ul class="checks" style="font-size:.9rem">
+    <li>中央教育審議会 教育課程企画特別部会「次期学習指導要領等に向けた審議まとめ（案）」（2026年9月25日）</li>
+    <li>国立教育政策研究所「PISA2025のポイント」／OECD "PISA 2025 Results (Volume I)"</li>
+    <li>ニューヨーク市長室発表・NYC教育局ガイダンス（2026年9月2日）</li>
+    <li>Bastani ほか "Generative AI Can Harm Learning"（ペンシルベニア大学ウォートン校、2024）</li>
+  </ul>
+</section>
+
+<section class="step">
+  <h2>振り返りを、一言だけ</h2>
+  <p class="what">「スーパー記録くん」という自作アプリです。<strong>打ってもいいですし、話すだけでもかまいません。</strong>2月にまた伺うときの材料にさせてください。</p>
+  <p style="margin:0 0 6px"><a class="btnlink" href="https://johnnymaeta.github.io/kirokukunneo/" target="_blank" rel="noopener">振り返りを送る（スーパー記録くん）</a></p>
+  <ul class="checks">
+    <li>明日の授業でやってみようと思ったことを1つ</li>
+    <li><strong>「うちのクラスでは難しい」と思ったところ</strong>（ここがいちばん知りたいです）</li>
+    <li>そのほか、なんでも</li>
+  </ul>
+</section>
+
+<div class="cta">
+  <p style="margin-top:0"><strong>本と、動画のこと</strong></p>
+  <p>授業でのAIの使い方は、Kindleの<strong>『AIに、わざと間違えさせる』</strong>にまとめています。Kindle Unlimitedの対象です。</p>
+  <p><a class="btnlink ghost" href="https://link.amazon/B06tY9Vpc" target="_blank" rel="noopener">『AIに、わざと間違えさせる』</a>
+     <a class="btnlink ghost" href="https://www.youtube.com/@maetaict" target="_blank" rel="noopener">YouTube（毎日19時・3分）</a>
+     <a class="btnlink ghost" href="https://bit.ly/maeta-kenshu" target="_blank" rel="noopener">研修・講演のメニュー表</a></p>
+  <p style="margin-bottom:0">今日はありがとうございました。<strong>明日、AIに答えを出させたら、一度だけ「なぜそれにしたの？」と聞いてみてください。</strong></p>
+</div>
+
+<footer class="page">
+  新宿区立柏木小学校 校内研修（2026年10月1日）／前多昌顕
+</footer>
+
+</div>
+<script>
+  document.querySelectorAll('.copy-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const code = btn.closest('.codewrap').querySelector('code').innerText;
+      const done = () => {
+        const original = btn.textContent;
+        btn.textContent = 'コピーしました';
+        btn.classList.add('done');
+        setTimeout(() => { btn.textContent = original; btn.classList.remove('done'); }, 1600);
+      };
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(code).then(done).catch(() => fallback(code, done));
+      } else {
+        fallback(code, done);
+      }
+    });
+  });
+  function fallback(text, done) {
+    const t = document.createElement('textarea');
+    t.value = text; document.body.appendChild(t); t.select();
+    try { document.execCommand('copy'); done(); } catch (e) {}
+    document.body.removeChild(t);
+  }
+</script>
+</body>
+</html>
